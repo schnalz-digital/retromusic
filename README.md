@@ -25,17 +25,6 @@ A modern, cyberpunk-themed web radio player streaming video game music, chiptune
 
 Visit the live player: **[RETRO-MUSIC](https://your-domain.github.io/game-chiptunes)**
 
-## 📡 Stream URLs
-
-| Channel | Stream URL |
-|---------|------------|
-| Game | `https://rainwave.cc/tune_in/1.mp3` |
-| OC ReMix | `https://rainwave.cc/tune_in/2.mp3` |
-| Covers | `https://rainwave.cc/tune_in/3.mp3` |
-| Chiptunes | `https://rainwave.cc/tune_in/4.mp3` |
-| All | `https://rainwave.cc/tune_in/5.mp3` |
-| Chill | `https://rainwave.cc/tune_in/6.mp3` |
-
 ## 🎯 Use Cases
 
 - Background music for gaming sessions
