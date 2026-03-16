@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RETRO-MUSIC</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #050508;
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #0d0d14;
+            --bg-card: #12121a;
+            --bg-card-hover: #1a1a25;
+            --neon-cyan: #00f5ff;
+            --neon-magenta: #ff00ff;
+            --neon-yellow: #f5ff00;
+            --neon-green: #00ff88;
+            --crypto-gold: #ffd700;
+            --text-primary: #ffffff;
+            --text-secondary: #8a8a9a;
+            --text-muted: #4a4a5a;
+            --border-glow: rgba(0, 245, 255, 0.3);
+            --gradient-cyber: linear-gradient(135deg, #00f5ff 0%, #ff00ff 50%, #f5ff00 100%);
+            --gradient-card: linear-gradient(145deg, #12121a 0%, #0a0a0f 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                linear-gradient(90deg, transparent 49.5%, rgba(0, 245, 255, 0.03) 49.5%, rgba(0, 245, 255, 0.03) 50.5%, transparent 50.5%),
+                linear-gradient(0deg, transparent 49.5%, rgba(0, 245, 255, 0.03) 49.5%, rgba(0, 245, 255, 0.03) 50.5%, transparent 50.5%);
+            background-size: 60px 60px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .scanlines {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent 2px,
+                rgba(0, 0, 0, 0.1) 2px,
+                rgba(0, 0, 0, 0.1) 4px
+            );
+            pointer-events: none;
+            z-index: 1000;
+            opacity: 0.3;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+            padding-top: 30px;
+            position: relative;
+        }
+
+        .logo-container {
+            display: inline-block;
+            position: relative;
+        }
+
+        .logo-glow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 300px;
+            height: 80px;
+            background: var(--neon-cyan);
+            filter: blur(60px);
+            opacity: 0.3;
+            animation: pulseGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% { opacity: 0.3; transform: translate(-50%, -50%) scale(1); }
+            50% { opacity: 0.5; transform: translate(-50%, -50%) scale(1.1); }
+        }
+
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 48px;
+            font-weight: 900;
+            letter-spacing: 8px;
+            position: relative;
+            display: inline-block;
+            background: linear-gradient(90deg, var(--neon-cyan), var(--neon-magenta), var(--neon-yellow));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 40px rgba(0, 245, 255, 0.5);
+            animation: textGlitch 5s ease-in-out infinite;
+        }
+
+        @keyframes textGlitch {
+            0%, 100% { filter: hue-rotate(0deg); }
+            25% { filter: hue-rotate(10deg); }
+            50% { filter: hue-rotate(-10deg); }
+            75% { filter: hue-rotate(5deg); }
+        }
+
+        .subtitle {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 14px;
+            color: var(--neon-cyan);
+            letter-spacing: 12px;
+            text-transform: uppercase;
+            margin-top: 15px;
+            opacity: 0.8;
+        }
+
+        .crypto-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(255, 215, 0, 0.05));
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            padding: 8px 20px;
+            border-radius: 30px;
+            margin-top: 20px;
+            font-size: 12px;
+            color: var(--crypto-gold);
+            font-family: 'Share Tech Mono', monospace;
+        }
+
+        .live-indicator {
+            width: 8px;
+            height: 8px;
+            background: var(--neon-green);
+            border-radius: 50%;
+            animation: liveBlink 1.5s ease-in-out infinite;
+        }
+
+        @keyframes liveBlink {
+            0%, 100% { opacity: 1; box-shadow: 0 0 10px var(--neon-green); }
+            50% { opacity: 0.4; box-shadow: none; }
+        }
+
+        .stations-section {
+            margin-bottom: 40px;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(0, 245, 255, 0.2);
+        }
+
+        .section-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--neon-cyan);
+            letter-spacing: 3px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .section-title::before {
+            content: '>';
+            color: var(--neon-magenta);
+        }
+
+        .station-count {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .stations-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 20px;
+        }
+
+        @media (max-width: 500px) {
+            .stations-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
+            }
+        }
+
+        .station-card {
+            background: var(--gradient-card);
+            border: 1px solid rgba(0, 245, 255, 0.1);
+            border-radius: 16px;
+            padding: 25px;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .station-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 245, 255, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .station-card:hover::before {
+            left: 100%;
+        }
+
+        .station-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            border-color: var(--neon-cyan);
+            box-shadow: 
+                0 20px 40px rgba(0, 0, 0, 0.4),
+                0 0 30px rgba(0, 245, 255, 0.15),
+                inset 0 0 30px rgba(0, 245, 255, 0.05);
+            background: var(--bg-card-hover);
+        }
+
+        .station-card.active {
+            border-color: var(--neon-magenta);
+            box-shadow: 
+                0 0 30px rgba(255, 0, 255, 0.3),
+                inset 0 0 30px rgba(255, 0, 255, 0.1);
+        }
+
+        .station-card.active::after {
+            content: 'PLAYING';
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 10px;
+            color: var(--neon-magenta);
+            letter-spacing: 2px;
+            animation: blink 1s ease-in-out infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .station-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+            display: block;
+            filter: drop-shadow(0 0 10px rgba(0, 245, 255, 0.5));
+        }
+
+        .station-name {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            margin-bottom: 8px;
+        }
+
+        .station-listeners {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 11px;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .listener-dot {
+            width: 6px;
+            height: 6px;
+            background: var(--neon-green);
+            border-radius: 50%;
+        }
+
+        .now-playing {
+            background: linear-gradient(145deg, #15151f 0%, #0a0a0f 100%);
+            border: 1px solid rgba(0, 245, 255, 0.15);
+            border-radius: 24px;
+            padding: 35px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .now-playing::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--neon-cyan), var(--neon-magenta), transparent);
+        }
+
+        .now-playing-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 20px;
+        }
+
+        @media (min-width: 900px) {
+            .now-playing-content {
+                flex-direction: row;
+                text-align: left;
+                align-items: flex-start;
+            }
+        }
+
+        .np-content {
+            text-align: center;
+        }
+
+        @media (min-width: 900px) {
+            .np-content {
+                text-align: left;
+            }
+        }
+
+        .now-playing-station {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(135deg, rgba(0, 245, 255, 0.15), rgba(255, 0, 255, 0.1));
+            padding: 10px 24px;
+            border-radius: 30px;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            border: 1px solid rgba(0, 245, 255, 0.3);
+            color: var(--neon-cyan);
+        }
+
+        .controls {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        @media (min-width: 900px) {
+            .controls {
+                justify-content: flex-start;
+            }
+        }
+
+        .control-btn {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(0, 245, 255, 0.2);
+            border-radius: 50%;
+            width: 56px;
+            height: 56px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: var(--text-primary);
+            font-size: 18px;
+        }
+
+        .control-btn:hover {
+            background: rgba(0, 245, 255, 0.1);
+            border-color: var(--neon-cyan);
+            box-shadow: 0 0 20px rgba(0, 245, 255, 0.3);
+            transform: scale(1.1);
+        }
+
+        .control-btn.play-btn {
+            width: 76px;
+            height: 76px;
+            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-magenta));
+            border: none;
+            font-size: 24px;
+            box-shadow: 0 0 30px rgba(0, 245, 255, 0.4);
+        }
+
+        .control-btn.play-btn:hover {
+            box-shadow: 0 0 50px rgba(0, 245, 255, 0.6);
+        }
+
+        .volume-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            width: 140px;
+        }
+
+        .volume-icon {
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: var(--neon-cyan);
+        }
+
+        .volume-icon:hover {
+            text-shadow: 0 0 10px var(--neon-cyan);
+        }
+
+        .volume-slider {
+            flex: 1;
+            -webkit-appearance: none;
+            appearance: none;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+            outline: none;
+        }
+
+        .volume-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 16px;
+            height: 16px;
+            background: var(--neon-cyan);
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 0 15px var(--neon-cyan);
+            transition: transform 0.2s ease;
+        }
+
+        .volume-slider::-webkit-slider-thumb:hover {
+            transform: scale(1.3);
+        }
+
+        .airplay-btn {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: var(--text-primary);
+            padding: 0;
+        }
+
+        .airplay-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.4);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+        }
+
+        .airplay-btn.active {
+            border-color: var(--text-primary);
+            color: var(--text-primary);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+            animation: pulseWhite 2s ease-in-out infinite;
+        }
+
+        @keyframes pulseWhite {
+            0%, 100% { box-shadow: 0 0 15px rgba(255, 255, 255, 0.2); }
+            50% { box-shadow: 0 0 25px rgba(255, 255, 255, 0.4); }
+        }
+
+        .status-bar {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-top: 25px;
+        }
+
+        @media (min-width: 900px) {
+            .status-bar {
+                justify-content: flex-start;
+            }
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--text-muted);
+        }
+
+        .status-dot.live {
+            background: var(--neon-green);
+            box-shadow: 0 0 10px var(--neon-green);
+            animation: liveBlink 1.5s ease-in-out infinite;
+        }
+
+        .status-text {
+            color: var(--text-secondary);
+        }
+
+        audio {
+            display: none;
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 28px;
+                letter-spacing: 4px;
+            }
+
+            .subtitle {
+                font-size: 10px;
+                letter-spacing: 6px;
+            }
+
+            .station-card {
+                padding: 20px;
+            }
+
+            .station-name {
+                font-size: 14px;
+            }
+
+            .controls {
+                gap: 12px;
+                padding: 15px 0;
+            }
+
+            .control-btn {
+                width: 44px;
+                height: 44px;
+                font-size: 14px;
+            }
+
+            .control-btn.play-btn {
+                width: 56px;
+                height: 56px;
+                font-size: 18px;
+            }
+
+            .volume-container {
+                width: 80px;
+            }
+
+            .volume-slider {
+                width: 50px;
+            }
+
+            .now-playing {
+                padding: 20px;
+            }
+
+            .now-playing-station {
+                font-size: 10px;
+                padding: 8px 16px;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .controls {
+                gap: 8px;
+            }
+
+            .control-btn {
+                width: 40px;
+                height: 40px;
+            }
+
+            .control-btn.play-btn {
+                width: 50px;
+                height: 50px;
+            }
+
+            .volume-container {
+                width: 70px;
+            }
+
+            .volume-slider {
+                width: 40px;
+            }
+        }
+
+        @media (min-width: 601px) and (max-width: 899px) {
+            .controls {
+                gap: 15px;
+            }
+
+            .control-btn {
+                width: 50px;
+                height: 50px;
+            }
+
+            .control-btn.play-btn {
+                width: 65px;
+                height: 65px;
+            }
+
+            .volume-container {
+                width: 100px;
+            }
+
+            .now-playing {
+                padding: 25px;
+            }
+        }
+
+        .corner-decoration {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--neon-cyan);
+            opacity: 0.5;
+        }
+
+        .corner-decoration.top-left {
+            top: 10px;
+            left: 10px;
+            border-right: none;
+            border-bottom: none;
+        }
+
+        .corner-decoration.top-right {
+            top: 10px;
+            right: 10px;
+            border-left: none;
+            border-bottom: none;
+        }
+
+        .corner-decoration.bottom-left {
+            bottom: 10px;
+            left: 10px;
+            border-right: none;
+            border-top: none;
+        }
+
+        .corner-decoration.bottom-right {
+            bottom: 10px;
+            right: 10px;
+            border-left: none;
+            border-top: none;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 40px 20px;
+            margin-top: 40px;
+            border-top: 1px solid rgba(0, 245, 255, 0.1);
+        }
+
+        .footer-text {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .footer-link {
+            color: var(--neon-cyan);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-link:hover {
+            color: var(--neon-magenta);
+            text-shadow: 0 0 10px var(--neon-cyan);
+        }
+    </style>
+</head>
+<body>
+    <div class="scanlines"></div>
+    
+    <div class="container">
+        <div class="corner-decoration top-left"></div>
+        <div class="corner-decoration top-right"></div>
+        <div class="corner-decoration bottom-left"></div>
+        <div class="corner-decoration bottom-right"></div>
+    
+        <header>
+            <div class="logo-container">
+                <div class="logo-glow"></div>
+                <h1>RETRO-MUSIC</h1>
+            </div>
+            <p class="subtitle">Video Game Music Streaming</p>
+            <div class="crypto-badge">
+                <span class="live-indicator"></span>
+                <span>LIVE STREAM</span>
+            </div>
+        </header>
+
+        <section class="stations-section">
+            <div class="section-header">
+                <h2 class="section-title">CHANNELS</h2>
+                <span class="station-count">6 ACTIVE</span>
+            </div>
+            <div class="stations-grid" id="stationsGrid"></div>
+        </section>
+
+        <section class="now-playing">
+            <div class="now-playing-content">
+                <div class="np-content">
+                    <div class="now-playing-station" id="currentStation">SELECT STATION</div>
+                    
+                    <div class="controls">
+                        <div class="volume-container">
+                            <span class="volume-icon" id="volumeIcon">🔊</span>
+                            <input type="range" class="volume-slider" id="volumeSlider" min="0" max="100" value="80">
+                        </div>
+                        
+                        <button class="control-btn" id="prevBtn">⏮</button>
+                        <button class="control-btn play-btn" id="playBtn">▶</button>
+                        <button class="control-btn" id="nextBtn">⏭</button>
+                        
+                        <button class="airplay-btn" id="airplayBtn" title="AirPlay">
+                            <svg width="20" height="20" viewBox="0 0 46 46" fill="currentColor">
+                                <path d="M22.24 28.66 8.63 44.35c-.56.65-.1 1.66.76 1.66h27.22c.86 0 1.32-1.01.76-1.66L23.76 28.66a.999.999 0 0 0-1.51 0Z"/>
+                                <path d="M15 23c0-4.41 3.59-8 8-8s8 3.59 8 8c0 2.64-1.29 4.97-3.26 6.43l1.64 1.89c2.5-1.92 4.12-4.93 4.12-8.33 0-5.8-4.7-10.5-10.5-10.5s-10.5 4.7-10.5 10.5c0 3.4 1.62 6.41 4.12 8.33l1.64-1.89C16.29 27.97 15 25.64 15 23Z"/>
+                                <path d="M9 23c0-7.72 6.28-14 14-14s14 6.28 14 14c0 4.44-2.09 8.4-5.33 10.97l1.65 1.9c3.77-3.02 6.18-7.66 6.18-12.86 0-9.11-7.39-16.5-16.5-16.5S6.5 13.89 6.5 23c0 5.21 2.42 9.84 6.18 12.86l1.65-1.9C11.09 31.39 9 27.44 9 22.99Z"/>
+                                <path d="M2.5 23C2.5 11.7 11.7 2.5 23 2.5S43.5 11.7 43.5 23c0 6.4-2.95 12.12-7.56 15.88l1.65 1.9C42.73 36.56 46 30.16 46 23 46 10.3 35.7 0 23 0S0 10.3 0 23c0 7.17 3.28 13.56 8.41 17.78l1.65-1.9C5.45 35.12 2.5 29.4 2.5 23Z"/>
+                            </svg>
+                        </button>
+                    </div>
+
+                    <div class="status-bar">
+                        <span class="status-dot" id="statusDot"></span>
+                        <span class="status-text" id="statusText">Ready to play</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <p class="footer-text">Streams provided by <a href="https://rainwave.cc/" target="_blank" class="footer-link">Rainwave.cc</a></p>
+        </footer>
+    </div>
+
+    <audio id="audioPlayer"></audio>
+
+    <script>
+        const stations = [
+            { id: 1, name: 'Game', icon: '🎮', key: 'game', stream: 'https://rainwave.cc/tune_in/1.mp3' },
+            { id: 2, name: 'OC ReMix', icon: '🔄', key: 'ocremix', stream: 'https://rainwave.cc/tune_in/2.mp3' },
+            { id: 3, name: 'Covers', icon: '🎤', key: 'covers', stream: 'https://rainwave.cc/tune_in/3.mp3' },
+            { id: 4, name: 'Chiptunes', icon: '💾', key: 'chiptune', stream: 'https://rainwave.cc/tune_in/4.mp3' },
+            { id: 5, name: 'All', icon: '🌟', key: 'all', stream: 'https://rainwave.cc/tune_in/5.mp3' },
+            { id: 6, name: 'Chill', icon: '😌', key: 'chill', stream: 'https://rainwave.cc/tune_in/6.mp3' }
+        ];
+
+        let currentStationId = parseInt(localStorage.getItem('rainwaveStation')) || 5;
+        let isPlaying = false;
+        let audioPlayer = document.getElementById('audioPlayer');
+        let currentStreamUrl = null;
+        let pollInterval = null;
+
+        const stationsGrid = document.getElementById('stationsGrid');
+        const playBtn = document.getElementById('playBtn');
+        const volumeSlider = document.getElementById('volumeSlider');
+        const volumeIcon = document.getElementById('volumeIcon');
+        const airplayBtn = document.getElementById('airplayBtn');
+        const currentStation = document.getElementById('currentStation');
+        const statusDot = document.getElementById('statusDot');
+        const statusText = document.getElementById('statusText');
+
+        function renderStations() {
+            stationsGrid.innerHTML = stations.map(station => `
+                <div class="station-card ${station.id === currentStationId ? 'active' : ''}" data-id="${station.id}">
+                    <span class="station-icon">${station.icon}</span>
+                    <div class="station-name">${station.name}</div>
+                    <div class="station-listeners" id="listeners-${station.id}">
+                        <span class="listener-dot"></span>
+                        <span>Connected</span>
+                    </div>
+                </div>
+            `).join('');
+
+            document.querySelectorAll('.station-card').forEach(card => {
+                card.addEventListener('click', () => {
+                    const stationId = parseInt(card.dataset.id);
+                    selectStation(stationId);
+                });
+            });
+        }
+
+        async function selectStation(stationId) {
+            currentStationId = stationId;
+            localStorage.setItem('rainwaveStation', stationId);
+            
+            document.querySelectorAll('.station-card').forEach(card => {
+                card.classList.toggle('active', parseInt(card.dataset.id) === stationId);
+            });
+
+            const station = stations.find(s => s.id === stationId);
+            currentStation.textContent = station.name;
+            
+            statusText.textContent = 'Connecting...';
+            statusDot.classList.remove('live');
+            playBtn.textContent = '⏸';
+
+            await loadStreamUrl(stationId);
+            fetchNowPlaying(stationId);
+            
+            if (pollInterval) clearInterval(pollInterval);
+            pollInterval = setInterval(() => fetchNowPlaying(stationId), 10000);
+        }
+
+        async function loadStreamUrl(stationId) {
+            try {
+                const station = stations.find(s => s.id === stationId);
+                currentStreamUrl = station.stream;
+                audioPlayer.src = currentStreamUrl;
+                audioPlayer.volume = volumeSlider.value / 100;
+                
+                const playPromise = audioPlayer.play();
+                if (playPromise !== undefined) {
+                    playPromise.then(() => {
+                        isPlaying = true;
+                        playBtn.textContent = '⏸';
+                        statusDot.classList.add('live');
+                        statusText.textContent = 'Streaming';
+                    }).catch(error => {
+                        console.log('Autoplay prevented:', error);
+                        statusText.textContent = 'Click play to start';
+                        isPlaying = false;
+                    });
+                }
+            } catch (error) {
+                console.error('Error loading stream:', error);
+                statusText.textContent = 'Click play to start';
+            }
+        }
+
+        async function fetchNowPlaying(stationId) {
+            try {
+                const response = await fetch(`https://rainwave.cc/api4/info?sid=${stationId}`);
+                const data = await response.json();
+                
+                if (data.stations && data.stations[0]) {
+                    const station = data.stations[0];
+                    const listenersEl = document.getElementById(`listeners-${stationId}`);
+                    if (listenersEl && station.listeners !== undefined) {
+                        listenersEl.innerHTML = `<span class="listener-dot"></span><span>${station.listeners} listeners</span>`;
+                    }
+                    
+                    if (station.curr_song) {
+                        statusDot.classList.add('live');
+                        statusText.textContent = 'Now Playing';
+                    }
+                }
+            } catch (error) {
+                console.error('Error fetching now playing:', error);
+            }
+        }
+
+        function togglePlay() {
+            if (!currentStreamUrl) {
+                selectStation(currentStationId);
+                return;
+            }
+            
+            isPlaying = !isPlaying;
+            
+            if (isPlaying) {
+                audioPlayer.play().then(() => {
+                    playBtn.textContent = '⏸';
+                    statusDot.classList.add('live');
+                    statusText.textContent = 'Streaming';
+                }).catch(e => {
+                    console.log('Play error:', e);
+                    statusText.textContent = 'Click to allow playback';
+                    isPlaying = false;
+                    playBtn.textContent = '▶';
+                });
+            } else {
+                audioPlayer.pause();
+                playBtn.textContent = '▶';
+                statusText.textContent = 'Paused';
+            }
+        }
+
+        function updateVolume() {
+            const volume = volumeSlider.value / 100;
+            audioPlayer.volume = volume;
+            
+            if (volume === 0) {
+                volumeIcon.textContent = '🔇';
+            } else if (volume < 0.5) {
+                volumeIcon.textContent = '🔉';
+            } else {
+                volumeIcon.textContent = '🔊';
+            }
+        }
+
+        volumeSlider.addEventListener('input', updateVolume);
+
+        volumeIcon.addEventListener('click', () => {
+            if (audioPlayer.volume > 0) {
+                volumeSlider.dataset.prevVolume = volumeSlider.value;
+                volumeSlider.value = 0;
+            } else {
+                volumeSlider.value = volumeSlider.dataset.prevVolume || 80;
+            }
+            updateVolume();
+        });
+
+        playBtn.addEventListener('click', togglePlay);
+
+        airplayBtn.addEventListener('click', () => {
+            if (audioPlayer && typeof audioPlayer.webkitShowPlaybackTargetPicker === 'function') {
+                audioPlayer.webkitShowPlaybackTargetPicker();
+                airplayBtn.classList.add('active');
+                statusText.textContent = 'Select AirPlay device';
+            } else {
+                statusText.textContent = 'AirPlay: Use Safari browser';
+            }
+        });
+
+        audioPlayer.addEventListener('ended', () => {
+            isPlaying = false;
+            playBtn.textContent = '▶';
+        });
+
+        audioPlayer.addEventListener('error', (e) => {
+            console.log('Audio error:', e);
+            statusText.textContent = 'Stream error';
+        });
+
+        audioPlayer.addEventListener('playing', () => {
+            statusDot.classList.add('live');
+            statusText.textContent = 'Streaming';
+        });
+
+        document.getElementById('prevBtn').addEventListener('click', () => {
+            const currentIndex = stations.findIndex(s => s.id === currentStationId);
+            const prevIndex = currentIndex > 0 ? currentIndex - 1 : stations.length - 1;
+            selectStation(stations[prevIndex].id);
+        });
+
+        document.getElementById('nextBtn').addEventListener('click', () => {
+            const currentIndex = stations.findIndex(s => s.id === currentStationId);
+            const nextIndex = currentIndex < stations.length - 1 ? currentIndex + 1 : 0;
+            selectStation(stations[nextIndex].id);
+        });
+
+        renderStations();
+        selectStation(currentStationId);
+    </script>
+</body>
+</html>
