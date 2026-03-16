@@ -768,16 +768,16 @@
         </footer>
     </div>
 
-    <audio id="audioPlayer"></audio>
+    <audio id="audioPlayer" preload="auto" crossorigin="anonymous"></audio>
 
     <script>
         const stations = [
-            { id: 1, name: 'Game', icon: '🎮', key: 'game', stream: 'https://rainwave.cc/tune_in/1.mp3' },
-            { id: 2, name: 'OC ReMix', icon: '🔄', key: 'ocremix', stream: 'https://rainwave.cc/tune_in/2.mp3' },
-            { id: 3, name: 'Covers', icon: '🎤', key: 'covers', stream: 'https://rainwave.cc/tune_in/3.mp3' },
-            { id: 4, name: 'Chiptunes', icon: '💾', key: 'chiptune', stream: 'https://rainwave.cc/tune_in/4.mp3' },
-            { id: 5, name: 'All', icon: '🌟', key: 'all', stream: 'https://rainwave.cc/tune_in/5.mp3' },
-            { id: 6, name: 'Chill', icon: '😌', key: 'chill', stream: 'https://rainwave.cc/tune_in/6.mp3' }
+            { id: 1, name: 'Game', icon: '🎮', key: 'game', stream: 'https://rainwave.cc/tune_in/1.mp3.m3u' },
+            { id: 2, name: 'OC ReMix', icon: '🔄', key: 'ocremix', stream: 'https://rainwave.cc/tune_in/2.mp3.m3u' },
+            { id: 3, name: 'Covers', icon: '🎤', key: 'covers', stream: 'https://rainwave.cc/tune_in/3.mp3.m3u' },
+            { id: 4, name: 'Chiptunes', icon: '💾', key: 'chiptune', stream: 'https://rainwave.cc/tune_in/4.mp3.m3u' },
+            { id: 5, name: 'All', icon: '🌟', key: 'all', stream: 'https://rainwave.cc/tune_in/5.mp3.m3u' },
+            { id: 6, name: 'Chill', icon: '😌', key: 'chill', stream: 'https://rainwave.cc/tune_in/6.mp3.m3u' }
         ];
 
         let currentStationId = parseInt(localStorage.getItem('rainwaveStation')) || 5;
@@ -843,6 +843,9 @@
                 currentStreamUrl = station.stream;
                 audioPlayer.src = currentStreamUrl;
                 audioPlayer.volume = volumeSlider.value / 100;
+                audioPlayer.load();
+                
+                statusText.textContent = 'Loading stream...';
                 
                 const playPromise = audioPlayer.play();
                 if (playPromise !== undefined) {
